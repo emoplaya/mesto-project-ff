@@ -45,6 +45,7 @@ const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
 const editProfilePopup = document.querySelector(".popup_type_edit");
 const editProfileButton = document.querySelector(".profile__edit-button");
+const editProfileSubmitButton = editProfileForm.querySelector(".popup__button");
 
 // обработчик клика открытия попапа изменения профиля
 editProfileButton.addEventListener("click", () => {
@@ -66,8 +67,7 @@ function handleEditProfile(evt) {
   const nameInputValue = nameInput.value;
   profileTitle.textContent = nameInputValue;
   profileDescription.textContent = jobInputValue;
-  const submitButton = editProfileForm.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
+  editProfileSubmitButton.textContent = "Сохранение...";
   updateUserData(nameInputValue, jobInputValue)
     .then(() => {
       closeModal(editProfilePopup);
@@ -75,7 +75,7 @@ function handleEditProfile(evt) {
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      submitButton.textContent = "Сохранить";
+      editProfileSubmitButton.textContent = "Сохранить";
     });
 }
 
@@ -87,6 +87,7 @@ const editAvatarForm = document.forms["edit-avatar"];
 const updateAvatarPopup = document.querySelector(".popup_type_new-avatar");
 const avatarImageLink = document.querySelector(".popup__input_type_avatar");
 const avatarProfileButton = document.querySelector(".profile__image-wrapper");
+const editAvatarSubmitButton = editAvatarForm.querySelector(".popup__button");
 
 // обработчик клика открытия попапа изменения аватара
 avatarProfileButton.addEventListener("click", () => {
@@ -98,8 +99,7 @@ avatarProfileButton.addEventListener("click", () => {
 function handleUpdateAvatar(evt) {
   evt.preventDefault();
   const avatarUrl = avatarImageLink.value;
-  const submitButton = editAvatarForm.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
+  editAvatarSubmitButton.textContent = "Сохранение...";
   updateUserAvatar(avatarUrl)
     .then((userData) => {
       profileImage.src = userData.avatar;
@@ -109,7 +109,7 @@ function handleUpdateAvatar(evt) {
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      submitButton.textContent = "Сохранить";
+      editAvatarSubmitButton.textContent = "Сохранить";
     });
 }
 
@@ -124,6 +124,7 @@ const addCardPopup = document.querySelector(".popup_type_new-card");
 const placeName = document.querySelector(".popup__input_type_card-name");
 const placeImageLink = document.querySelector(".popup__input_type_url");
 const addCardButton = document.querySelector(".profile__add-button");
+const addCardSubmitButton = addCardForm.querySelector(".popup__button");
 
 // обработчик клика открытия попапа добавления карточки
 addCardButton.addEventListener("click", () => {
@@ -136,8 +137,7 @@ function handleAddCard(evt) {
   evt.preventDefault();
   const name = placeName.value;
   const link = placeImageLink.value;
-  const submitButton = addCardForm.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
+  addCardSubmitButton.textContent = "Сохранение...";
   addNewCardToServer(name, link)
     .then((newCard) => {
       const cardElement = createCard(
@@ -157,7 +157,7 @@ function handleAddCard(evt) {
     })
     .catch((err) => console.log(err))
     .finally(() => {
-      submitButton.textContent = "Сохранить";
+      addCardSubmitButton.textContent = "Сохранить";
     });
 }
 
@@ -211,7 +211,7 @@ const renderCards = (cards, userId) => {
       likeCardOnServer,
       unlikeCardOnServer
     );
-    placesContainer.prepend(cardElement);
+    placesContainer.append(cardElement);
   });
 };
 
